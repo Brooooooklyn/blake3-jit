@@ -86,4 +86,6 @@ jobs:
         run: yarn build
 
       - name: Publish to npm
-        run: npm publish --access public
+        run: |
+          npm install -g npm
+          npm publish --access public

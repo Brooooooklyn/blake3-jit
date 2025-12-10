@@ -7,6 +7,7 @@
 import { blake3 as napiBlake3 } from "@napi-rs/blake-hash";
 
 import { hash as ourHash, hashInto as ourHashInto, warmupSimd } from "../src/index.js";
+// @ts-ignore
 import { hash as blake3FastHash } from "../tmp/blake3-fast/dist/src/index.js";
 
 // Wrapper to match our API (returns Uint8Array)

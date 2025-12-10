@@ -37,6 +37,9 @@ jobs:
       - name: Lint
         run: yarn lint
 
+      - name: Format check
+        run: yarn oxfmt --check
+
       - name: Test
         run: yarn test
 

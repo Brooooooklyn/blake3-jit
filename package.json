@@ -1,6 +1,6 @@
 {
   "name": "blake3-jit",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "The pure JavaScript BLAKE3 implementation with runtime WASM SIMD",
   "type": "module",
   "main": "./dist/index.js",

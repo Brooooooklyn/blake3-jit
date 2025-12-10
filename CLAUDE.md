@@ -1,8 +1,8 @@
-# BLAKE3-Ultra: High-Performance JavaScript Implementation
+# BLAKE3-JIT: High-Performance JavaScript Implementation
 
 ## Project Overview
 
-**blake3-ultra** is a high-performance, pure JavaScript/WebAssembly implementation of the BLAKE3 cryptographic hash function. It achieves **1.38 GB/s** peak throughput - **1.6-1.8x faster** than blake3-fast for small inputs and **1.1-1.2x faster** for large inputs.
+**blake3-jit** is a high-performance, pure JavaScript/WebAssembly implementation of the BLAKE3 cryptographic hash function. It achieves **1.38 GB/s** peak throughput - **1.6-1.8x faster** than blake3-fast for small inputs and **1.1-1.2x faster** for large inputs.
 
 ### Origins
 
@@ -18,7 +18,7 @@ Key learnings came from:
 ## Architecture
 
 ```
-blake3-ultra (Public API)
+blake3-jit (Public API)
 ├── hash() / hashInto()           One-shot hashing
 ├── Hasher class                   Incremental hashing
 ├── XofReader class                Variable-length output (XOF)
@@ -299,7 +299,7 @@ put([0xfd, 0x0d, 2, 3, 0, 1, 6, 7, 4, 5, 10, 11, 8, 9, 14, 15, 12, 13]);
 
 ### Benchmark Results
 
-| Input Size | blake3-ultra | blake3-fast | Ratio |
+| Input Size | blake3-jit | blake3-fast | Ratio |
 | ---------- | ------------ | ----------- | ----- |
 | 96B        | 352 MB/s     | 216 MB/s    | 1.63× |
 | 512B       | 749 MB/s     | 409 MB/s    | 1.83× |

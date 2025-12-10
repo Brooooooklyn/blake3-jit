@@ -10,7 +10,7 @@
  *
  * @example
  * ```typescript
- * import { hash, createKeyed, createDeriveKey } from 'blake3-ultra';
+ * import { hash, createKeyed, createDeriveKey } from 'blake3-jit';
  *
  * // Simple hashing
  * const digest = hash(new Uint8Array([1, 2, 3]));

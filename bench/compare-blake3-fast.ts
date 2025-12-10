@@ -104,7 +104,7 @@ async function benchmarkInto(
 
 async function main() {
   console.log("╔═══════════════════════════════════════════════════════════════════════════════════╗");
-  console.log("║     BLAKE3 Benchmark: blake3-ultra vs blake3-fast vs @napi-rs/blake-hash          ║");
+  console.log("║     BLAKE3 Benchmark: blake3-jit vs blake3-fast vs @napi-rs/blake-hash          ║");
   console.log("╚═══════════════════════════════════════════════════════════════════════════════════╝\n");
 
   // Pre-warm SIMD
@@ -126,14 +126,14 @@ async function main() {
   const napiHex = toHex(napiResult);
 
   console.log("Correctness check:");
-  console.log(`  blake3-ultra:        ${ourHex}`);
+  console.log(`  blake3-jit:        ${ourHex}`);
   console.log(`  blake3-fast:         ${blake3FastHex}`);
   console.log(`  @napi-rs/blake-hash: ${napiHex}`);
   console.log(`  All match: ${ourHex === blake3FastHex && ourHex === napiHex ? "YES ✓" : "NO ✗"}\n`);
 
   // Main benchmark table
   console.log("┌────────────┬─────────────┬─────────────┬─────────────┬──────────────────┬──────────────────┐");
-  console.log("│ Input Size │ blake3-ultra│ blake3-fast │ napi-rs     │ vs blake3-fast   │ vs napi-rs       │");
+  console.log("│ Input Size │ blake3-jit│ blake3-fast │ napi-rs     │ vs blake3-fast   │ vs napi-rs       │");
   console.log("├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┼──────────────────┤");
 
   for (const [label, size] of BENCH_SIZES) {

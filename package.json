@@ -1,5 +1,5 @@
 {
-  "name": "blake3-ultra",
+  "name": "blake3-jit",
   "version": "1.0.0",
   "description": "The pure JavaScript BLAKE3 implementation with runtime WASM SIMD",
   "type": "module",

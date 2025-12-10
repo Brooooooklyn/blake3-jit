@@ -93,7 +93,7 @@ async function main() {
   console.log("======================\n");
 
   // Pre-warm SIMD (hash() auto-initializes, but this avoids first-call latency)
-  await warmupSimd();
+  warmupSimd();
 
   // Run benchmarks
   console.log("Input Size | Throughput | Ops/sec | Iterations");

@@ -82,6 +82,7 @@ blake3-jit
 ```
 
 **Key optimizations:**
+
 - SMI variables force V8 32-bit integer ALU
 - Arena pattern: all buffers in WASM linear memory (zero GC)
 - Runtime WASM codegen eliminates `.wasm` file dependency
@@ -90,13 +91,13 @@ blake3-jit
 
 Compared against native Rust (`@napi-rs/blake-hash`):
 
-| Size | blake3-jit | @napi-rs | Notes |
-|------|------------|----------|-------|
-| 96B  | 362 MB/s   | 149 MB/s | **2.4x faster** |
-| 512B | 748 MB/s   | 521 MB/s | **1.4x faster** |
-| 1KB  | 811 MB/s   | 701 MB/s | **1.2x faster** |
-| 32KB | 1.36 GB/s  | 1.97 GB/s | native wins |
-| 1MB  | 1.38 GB/s  | 2.06 GB/s | native wins |
+| Size | blake3-jit | @napi-rs  | Notes           |
+| ---- | ---------- | --------- | --------------- |
+| 96B  | 362 MB/s   | 149 MB/s  | **2.4x faster** |
+| 512B | 748 MB/s   | 521 MB/s  | **1.4x faster** |
+| 1KB  | 811 MB/s   | 701 MB/s  | **1.2x faster** |
+| 32KB | 1.36 GB/s  | 1.97 GB/s | native wins     |
+| 1MB  | 1.38 GB/s  | 2.06 GB/s | native wins     |
 
 **Pure JS beats native Rust for small inputs** due to FFI overhead.
 

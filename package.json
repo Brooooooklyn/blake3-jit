@@ -1,0 +1,47 @@
+{
+  "name": "blake3-ultra",
+  "version": "1.0.0",
+  "description": "The pure JavaScript BLAKE3 implementation with runtime WASM SIMD",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rolldown -c rolldown.config.js",
+    "test": "vitest run",
+    "lint": "oxlint --type-aware .",
+    "format": "oxfmt",
+    "bench": "oxnode bench/benchmark.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "keywords": [
+    "blake3",
+    "hash",
+    "crypto",
+    "simd",
+    "wasm",
+    "fast"
+  ],
+  "author": "LongYinan <github@lyn.one>",
+  "license": "MIT",
+  "devDependencies": {
+    "@napi-rs/blake-hash": "1.3.6",
+    "@oxc-node/cli": "^0.0.35",
+    "@types/node": "^24.10.2",
+    "oxfmt": "^0.17.0",
+    "oxlint": "^1.32.0",
+    "oxlint-tsgolint": "^0.8.4",
+    "rolldown": "1.0.0-beta.53",
+    "rolldown-plugin-dts": "^0.18.3",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.15"
+  },
+  "sideEffects": false,
+  "packageManager": "yarn@4.12.0",
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Brooooooklyn"
+  }
+}

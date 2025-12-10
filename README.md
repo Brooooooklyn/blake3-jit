@@ -1,5 +1,7 @@
 # blake3-jit
 
+[![CI](https://github.com/Brooooooklyn/blake3-jit/actions/workflows/ci.yml/badge.svg)](https://github.com/Brooooooklyn/blake3-jit/actions/workflows/ci.yml)
+
 High-performance BLAKE3 implementation with runtime JIT WASM SIMD.
 
 ## Features

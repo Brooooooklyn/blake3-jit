@@ -109,7 +109,7 @@ async function main() {
     "╔═══════════════════════════════════════════════════════════════════════════════════╗",
   );
   console.log(
-    "║     BLAKE3 Benchmark: blake3-jit vs blake3-fast vs @napi-rs/blake-hash          ║",
+    "║     BLAKE3 Benchmark: blake3-jit vs blake3-fast vs @napi-rs/blake-hash            ║",
   );
   console.log(
     "╚═══════════════════════════════════════════════════════════════════════════════════╝\n",
@@ -134,7 +134,7 @@ async function main() {
   const napiHex = toHex(napiResult);
 
   console.log("Correctness check:");
-  console.log(`  blake3-jit:        ${ourHex}`);
+  console.log(`  blake3-jit:          ${ourHex}`);
   console.log(`  blake3-fast:         ${blake3FastHex}`);
   console.log(`  @napi-rs/blake-hash: ${napiHex}`);
   console.log(
@@ -146,7 +146,7 @@ async function main() {
     "┌────────────┬─────────────┬─────────────┬─────────────┬──────────────────┬──────────────────┐",
   );
   console.log(
-    "│ Input Size │ blake3-jit│ blake3-fast │ napi-rs     │ vs blake3-fast   │ vs napi-rs       │",
+    "│ Input Size │ blake3-jit  │ blake3-fast │ napi-rs     │ vs blake3-fast   │ vs napi-rs       │",
   );
   console.log(
     "├────────────┼─────────────┼─────────────┼─────────────┼──────────────────┼──────────────────┤",

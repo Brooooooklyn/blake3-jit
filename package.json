@@ -2,16 +2,31 @@
   "name": "blake3-jit",
   "version": "1.0.0",
   "description": "The pure JavaScript BLAKE3 implementation with runtime WASM SIMD",
-  "type": "module",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "keywords": [
+    "blake3",
+    "crypto",
+    "fast",
+    "hash",
+    "simd",
+    "wasm"
+  ],
+  "license": "MIT",
+  "author": "LongYinan <github@lyn.one>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Brooooooklyn/blake3-jit.git"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/Brooooooklyn"
+  },
   "files": [
     "dist"
   ],
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rolldown -c rolldown.config.js",
     "test": "vitest run",
@@ -20,32 +35,18 @@
     "bench": "oxnode bench/benchmark.ts",
     "typecheck": "tsc -p tsconfig.json"
   },
-  "keywords": [
-    "blake3",
-    "hash",
-    "crypto",
-    "simd",
-    "wasm",
-    "fast"
-  ],
-  "author": "LongYinan <github@lyn.one>",
-  "license": "MIT",
   "devDependencies": {
+    "@huggingface/blake3-wasm": "^0.0.2",
     "@napi-rs/blake-hash": "1.3.6",
     "@oxc-node/cli": "^0.0.35",
-    "@types/node": "^24.10.2",
-    "oxfmt": "^0.17.0",
-    "oxlint": "^1.32.0",
-    "oxlint-tsgolint": "^0.8.4",
-    "rolldown": "1.0.0-beta.53",
-    "rolldown-plugin-dts": "^0.18.3",
+    "@types/node": "^25.0.3",
+    "oxfmt": "^0.21.0",
+    "oxlint": "^1.36.0",
+    "oxlint-tsgolint": "^0.10.1",
+    "rolldown": "1.0.0-beta.58",
+    "rolldown-plugin-dts": "^0.20.0",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.15"
+    "vitest": "^4.0.16"
   },
-  "sideEffects": false,
-  "packageManager": "yarn@4.12.0",
-  "funding": {
-    "type": "github",
-    "url": "https://github.com/sponsors/Brooooooklyn"
-  }
+  "packageManager": "yarn@4.12.0"
 }

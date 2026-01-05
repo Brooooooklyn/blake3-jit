@@ -18,8 +18,8 @@
     "noImplicitReturns": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["."],
-  "exclude": ["node_modules", "dist", "tmp"],
+  "exclude": ["node_modules", "dist", "tmp"]
 }

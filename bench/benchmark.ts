@@ -2,7 +2,7 @@
  * BLAKE3 Benchmark Suite
  *
  * Measures throughput at various input sizes.
- * Run with: npx tsx bench/benchmark.ts
+ * Run with: yarn oxnode bench/benchmark.ts
  */
 
 import { hash, warmupSimd } from "../src/index.js";
@@ -88,47 +88,41 @@ function runBenchmark(
 }
 
 // Main benchmark runner
-async function main() {
-  console.log("BLAKE3 Benchmark Suite");
-  console.log("======================\n");
+console.log("BLAKE3 Benchmark Suite");
+console.log("======================\n");
 
-  // Pre-warm SIMD (hash() auto-initializes, but this avoids first-call latency)
-  warmupSimd();
+// Pre-warm SIMD (hash() auto-initializes, but this avoids first-call latency)
+warmupSimd();
 
-  // Run benchmarks
-  console.log("Input Size | Throughput | Ops/sec | Iterations");
-  console.log("-----------|------------|---------|------------");
+// Run benchmarks
+console.log("Input Size |  Throughput  | Ops/sec | Iterations");
+console.log("-----------|--------------|---------|------------");
 
-  for (const [name, size] of BENCH_SIZES) {
-    const input = generateInput(size);
-    const result = runBenchmark(name, input);
+for (const [name, size] of BENCH_SIZES) {
+  const input = generateInput(size);
+  const result = runBenchmark(name, input);
 
-    const throughputStr = formatThroughput(result.throughput).padStart(10);
-    const opsStr = result.opsPerSec.toFixed(0).padStart(7);
-    const itersStr = result.iterations.toString().padStart(10);
+  const throughputStr = formatThroughput(result.throughput).padStart(12);
+  const opsStr = result.opsPerSec.toFixed(0).padStart(7);
+  const itersStr = result.iterations.toString().padStart(10);
 
-    console.log(`${name.padEnd(10)} | ${throughputStr} | ${opsStr} | ${itersStr}`);
-  }
-
-  console.log();
-
-  // Extended benchmarks for large inputs
-  console.log("Extended Large Input Benchmarks:");
-  console.log("--------------------------------");
-
-  const largeInputs = [
-    ["4MB", 4 * 1024 * 1024],
-    ["16MB", 16 * 1024 * 1024],
-  ] as const;
-
-  for (const [name, size] of largeInputs) {
-    const input = generateInput(size);
-    const result = runBenchmark(name, input);
-
-    console.log(
-      `${name}: ${formatThroughput(result.throughput)} (${result.iterations} iterations)`,
-    );
-  }
+  console.log(`${name.padEnd(10)} | ${throughputStr} | ${opsStr} | ${itersStr}`);
 }
 
-main().catch(console.error);
+console.log();
+
+// Extended benchmarks for large inputs
+console.log("Extended Large Input Benchmarks:");
+console.log("--------------------------------");
+
+const largeInputs = [
+  ["4MB", 4 * 1024 * 1024],
+  ["16MB", 16 * 1024 * 1024],
+] as const;
+
+for (const [name, size] of largeInputs) {
+  const input = generateInput(size);
+  const result = runBenchmark(name, input);
+
+  console.log(`${name}: ${formatThroughput(result.throughput)} (${result.iterations} iterations)`);
+}

@@ -75,9 +75,9 @@ export function formatThroughput(bytesPerMs: number): string {
  */
 export function formatSpeedup(ratio: number): string {
   if (ratio >= 1) {
-    return `\x1b[32m${ratio.toFixed(2)}x\x1b[0m`;
+    return `\u001b[32m${ratio.toFixed(2)}x\u001b[0m`;
   } else {
-    return `\x1b[31m${ratio.toFixed(2)}x\x1b[0m`;
+    return `\u001b[31m${ratio.toFixed(2)}x\u001b[0m`;
   }
 }
 
@@ -114,9 +114,11 @@ export function printTable(results: BenchmarkResult[]): void {
     const optimized = formatThroughput(result.optimizedThroughput).padEnd(throughputWidth - 2);
     // For speedup, we need to account for ANSI codes in padding
     const speedupStr = formatSpeedup(result.speedup);
+    // Strip ANSI escape codes for length calculation
+    const ansiPattern = new RegExp(String.fromCharCode(0x1b) + "\\[[0-9;]*m", "g");
     const speedupPadded =
       speedupStr +
-      " ".repeat(Math.max(0, speedupWidth - 2 - speedupStr.replace(/\x1b\[[0-9;]*m/g, "").length));
+      " ".repeat(Math.max(0, speedupWidth - 2 - speedupStr.replace(ansiPattern, "").length));
 
     console.log(`│ ${name} │ ${naive} │ ${optimized} │ ${speedupPadded} │`);
   }

@@ -21,7 +21,7 @@ npm install blake3-jit
 ## Usage
 
 ```typescript
-import { hash, createHasher, createKeyed, createDeriveKey } from 'blake3-jit';
+import { hash, createHasher, createKeyed, createDeriveKey } from "blake3-jit";
 
 // One-shot hashing
 const digest = hash(new Uint8Array([1, 2, 3]));

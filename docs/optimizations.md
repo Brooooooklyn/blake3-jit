@@ -254,7 +254,7 @@ cvStackPos += 8;
 
 ```typescript
 const m = blockWords;
-s_0 = (((s_0 + s_4) | 0) + m[PERMUTATIONS[p++]]) | 0;  // Array access
+s_0 = (((s_0 + s_4) | 0) + m[PERMUTATIONS[p++]]) | 0; // Array access
 ```
 
 ### After (Optimized)
@@ -299,8 +299,8 @@ if (i != 6) {
 
 ```typescript
 export function hash(input) {
-  const blockWords = new Uint32Array(16);      // New allocation
-  const cvStack = new Uint32Array(maxDepth);   // New allocation
+  const blockWords = new Uint32Array(16); // New allocation
+  const cvStack = new Uint32Array(maxDepth); // New allocation
   // ...
 }
 ```
@@ -445,9 +445,9 @@ Offset 7360-7487: Temp CVs (4×8 words)
 
 ```typescript
 // Arena views - created once at WASM init
-let arenaCvStack: Uint32Array;      // Backed by WASM memory
-let arenaParentBlock: Uint32Array;  // No JS allocation
-let arenaChunkCv: Uint32Array;      // Direct access
+let arenaCvStack: Uint32Array; // Backed by WASM memory
+let arenaParentBlock: Uint32Array; // No JS allocation
+let arenaChunkCv: Uint32Array; // Direct access
 
 function setupArenaViews() {
   const buffer = wasmMemory.buffer;

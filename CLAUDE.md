@@ -93,16 +93,16 @@ Total: ~7.5KB of 64KB page
 ```typescript
 // src/wasm-simd.ts
 export const SIMD_MEMORY = {
-  CV_STACK: 5216,        // 64 levels × 8 words × 4 bytes
-  PARENT_BLOCK: 7264,    // 16 words for parent compression
-  CHUNK_CV: 7328,        // Output of compressParent()
-  TEMP_CVS: 7360,        // 4 chunk CVs for batch processing
+  CV_STACK: 5216, // 64 levels × 8 words × 4 bytes
+  PARENT_BLOCK: 7264, // 16 words for parent compression
+  CHUNK_CV: 7328, // Output of compressParent()
+  TEMP_CVS: 7360, // 4 chunk CVs for batch processing
 } as const;
 
 // Arena views - created once at SIMD init
-let arenaCvStack: Uint32Array;      // Backed by WASM memory
-let arenaParentBlock: Uint32Array;  // No JS allocation
-let arenaChunkCv: Uint32Array;      // Direct access
+let arenaCvStack: Uint32Array; // Backed by WASM memory
+let arenaParentBlock: Uint32Array; // No JS allocation
+let arenaChunkCv: Uint32Array; // Direct access
 ```
 
 ---
@@ -165,8 +165,8 @@ Same pattern as state - 16 SMI variables `m_0` through `m_15`.
 
 ```typescript
 // src/hash.ts - allocated once at module load
-const HYPER_CV_STACK = new Uint32Array(64 * 8);  // Merkle tree
-const reusableOut8 = new Uint32Array(8);          // 32-byte output
+const HYPER_CV_STACK = new Uint32Array(64 * 8); // Merkle tree
+const reusableOut8 = new Uint32Array(8); // 32-byte output
 const reusableOut8View = new Uint8Array(reusableOut8.buffer, 0, 32);
 ```
 
@@ -229,16 +229,15 @@ for (let w = 0; w < 16; w++) {
 ```typescript
 export function hashInto(
   input: Uint8Array,
-  output: Uint8Array,  // Caller-provided buffer
-  outputLength: number = 32
-): void
+  output: Uint8Array, // Caller-provided buffer
+  outputLength: number = 32,
+): void;
 ```
 
 #### Task 7: Unrolled CV Copy
 
 ```typescript
-function copyCV8(src: Uint32Array, srcOff: number,
-                 dst: Uint32Array, dstOff: number): void {
+function copyCV8(src: Uint32Array, srcOff: number, dst: Uint32Array, dstOff: number): void {
   dst[dstOff] = src[srcOff];
   dst[dstOff + 1] = src[srcOff + 1];
   // ... 8 direct assignments, V8 inlines this
@@ -336,8 +335,7 @@ For inputs < 4KB:
 ```typescript
 // Same IV as SHA-256 (first 32 bits of √primes 2-19)
 const IV = [
-  0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A,
-  0x510E527F, 0x9B05688C, 0x1F83D9AB, 0x5BE0CD19
+  0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19,
 ];
 
 // Domain separation flags
@@ -350,9 +348,9 @@ const DERIVE_KEY_CONTEXT = 32;
 const DERIVE_KEY_MATERIAL = 64;
 
 // Sizes
-const BLOCK_LEN = 64;   // bytes
+const BLOCK_LEN = 64; // bytes
 const CHUNK_LEN = 1024; // bytes (16 blocks)
-const OUT_LEN = 32;     // default hash output
+const OUT_LEN = 32; // default hash output
 ```
 
 ### Merkle Tree Merge Pattern

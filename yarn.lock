@@ -117,10 +117,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@huggingface/blake3-wasm@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@huggingface/blake3-wasm@npm:0.0.2"
-  checksum: 10c0/c744b11708caa33d9e3272ee4b6e0ad1f111d763fd4678ad10c1f6aeb3101033cc05b613fe94e4bab7d2cfea7f73b0e5e4aac8a8019e46e2b54db16c25ebf08d
+"@huggingface/blake3-wasm@npm:^0.0.4":
+  version: 0.0.4
+  resolution: "@huggingface/blake3-wasm@npm:0.0.4"
+  checksum: 10c0/26f58347dabeae8135084fba4e06286615efd926ef812c8cfb80d4bf1d8c555effaad0ef55d9897231c79ecb58c5c3a9c3aecc004c0b355e55eaf4dae686d723
   languageName: node
   linkType: hard
 
@@ -1292,7 +1292,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "blake3-jit@workspace:."
   dependencies:
-    "@huggingface/blake3-wasm": "npm:^0.0.2"
+    "@huggingface/blake3-wasm": "npm:^0.0.4"
     "@napi-rs/blake-hash": "npm:1.3.6"
     "@oxc-node/cli": "npm:^0.1.0"
     "@types/node": "npm:^25.0.3"

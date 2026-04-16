@@ -36,7 +36,7 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "devDependencies": {
-    "@huggingface/blake3-wasm": "^0.0.2",
+    "@huggingface/blake3-wasm": "^0.0.4",
     "@napi-rs/blake-hash": "1.3.6",
     "@oxc-node/cli": "^0.1.0",
     "@types/node": "^25.0.3",

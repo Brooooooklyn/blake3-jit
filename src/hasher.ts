@@ -144,6 +144,18 @@ class ChunkState {
   }
 
   /**
+   * Reset chunk state to process a new chunk.
+   * Reuses all internal buffers — zero allocations.
+   */
+  resetTo(keyWords: Uint32Array, chunkCounter: number, flags: number): void {
+    this.chainingValue.set(keyWords);
+    this.chunkCounter = chunkCounter;
+    this.blockLen = 0;
+    this.blocksCompressed = 0;
+    this.flags = flags;
+  }
+
+  /**
    * Get the flags for the current block.
    */
   private startFlag(): number {
@@ -264,6 +276,11 @@ export class Hasher {
   private cvStack: Uint32Array;
   private cvStackLen: number;
   private flags: number;
+  private parentBlock: Uint32Array;
+  private parentCv: Uint32Array;
+  private chunkCv: Uint32Array;
+  private outWords: Uint32Array;
+  private finalizeCv: Uint32Array;
 
   /**
    * Create a new Hasher.
@@ -277,6 +294,22 @@ export class Hasher {
     this.chunkState = new ChunkState(this.keyWords, 0, this.flags);
     this.cvStack = new Uint32Array(MAX_DEPTH * 8);
     this.cvStackLen = 0;
+    // Pre-allocate reusable buffers to eliminate allocations in hot paths
+    this.parentBlock = new Uint32Array(16);
+    this.parentCv = new Uint32Array(8);
+    this.chunkCv = new Uint32Array(8);
+    this.outWords = new Uint32Array(16);
+    this.finalizeCv = new Uint32Array(8);
+  }
+
+  /**
+   * Reset the hasher to process a new message with the same key/flags.
+   * Reuses all internal buffers — zero allocations.
+   */
+  reset(): this {
+    this.chunkState.resetTo(this.keyWords, 0, this.flags);
+    this.cvStackLen = 0;
+    return this;
   }
 
   /**
@@ -355,8 +388,8 @@ export class Hasher {
    */
   private addChunkCv(newCv: Uint32Array, newCvOffset: number, totalChunks: number): void {
     // Merge completed subtrees based on trailing zeros in chunk count
-    const parentBlock = new Uint32Array(16);
-    const parentCv = new Uint32Array(8);
+    const parentBlock = this.parentBlock;
+    const parentCv = this.parentCv;
 
     while ((totalChunks & 1) === 0) {
       // Pop left child, new CV is right child
@@ -399,7 +432,7 @@ export class Hasher {
       // If current chunk is full, finalize it and start a new one
       if (this.chunkState.len() === CHUNK_LEN) {
         const output = this.chunkState.output();
-        const chunkCv = new Uint32Array(8);
+        const chunkCv = this.chunkCv;
 
         compress(
           output.inputCv,
@@ -417,7 +450,7 @@ export class Hasher {
         const totalChunks = this.chunkState.chunkCounter + 1;
         this.addChunkCv(chunkCv, 0, totalChunks);
 
-        this.chunkState = new ChunkState(this.keyWords, totalChunks, this.flags);
+        this.chunkState.resetTo(this.keyWords, totalChunks, this.flags);
       }
 
       // Fill the current chunk
@@ -444,8 +477,8 @@ export class Hasher {
   } {
     // Finalize the current chunk
     let output = this.chunkState.output();
-    let parentBlock = new Uint32Array(16);
-    let cv = new Uint32Array(8);
+    let parentBlock = this.parentBlock;
+    let cv = this.finalizeCv;
 
     // If there are chunks on the stack, merge them
     if (this.cvStackLen > 0) {
@@ -511,7 +544,7 @@ export class Hasher {
 
     if (outputLength <= 64) {
       // Single block output
-      const outWords = new Uint32Array(16);
+      const outWords = this.outWords;
       compress(
         output.inputCv,
         0,

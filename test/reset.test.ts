@@ -157,7 +157,7 @@ describe("Hasher.reset()", () => {
 
     // Update and finalize
     hasher.update(data);
-    const _hash1 = hasher.finalize();
+    hasher.finalize();
 
     // Reset without updating
     hasher.reset();
@@ -173,7 +173,7 @@ describe("Hasher.reset()", () => {
 
     // Test with 32-byte output
     hasher.update(data);
-    const _hash32 = hasher.finalize(32);
+    const hash32 = hasher.finalize(32);
 
     // Reset and test with 64-byte output
     hasher.reset();
@@ -181,6 +181,6 @@ describe("Hasher.reset()", () => {
     const hash64 = hasher.finalize(64);
 
     // First 32 bytes should match
-    expect(bytesToHex(_hash32)).toBe(bytesToHex(hash64.subarray(0, 32)));
+    expect(bytesToHex(hash32)).toBe(bytesToHex(hash64.subarray(0, 32)));
   });
 });

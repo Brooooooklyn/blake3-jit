@@ -5,52 +5,52 @@ __metadata:
   version: 10
   cacheKey: 10c0
 
-"@babel/generator@npm:8.0.0-rc.6":
-  version: 8.0.0-rc.6
-  resolution: "@babel/generator@npm:8.0.0-rc.6"
+"@babel/generator@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@babel/generator@npm:8.0.0"
   dependencies:
-    "@babel/parser": "npm:^8.0.0-rc.6"
-    "@babel/types": "npm:^8.0.0-rc.6"
+    "@babel/parser": "npm:^8.0.0"
+    "@babel/types": "npm:^8.0.0"
     "@jridgewell/gen-mapping": "npm:^0.3.12"
     "@jridgewell/trace-mapping": "npm:^0.3.28"
     "@types/jsesc": "npm:^2.5.0"
     jsesc: "npm:^3.0.2"
-  checksum: 10c0/bb28a5afee0c28cb68c7910091348938840fe3e5a5f382db5279d50c3fbb99584b718f0862aaaed0fdc95561e771874d3593170d4604f90c56278840651a57ec
+  checksum: 10c0/2b2d171beaedcacca62164f0f39bc8962df5f9700a54c5515174276ea20b3a53933e9804e0b35c2be1059108a764447d99d0c5beb63ecbbf8c66035ca6c003c4
   languageName: node
   linkType: hard
 
-"@babel/helper-string-parser@npm:^8.0.0-rc.6":
-  version: 8.0.0-rc.6
-  resolution: "@babel/helper-string-parser@npm:8.0.0-rc.6"
-  checksum: 10c0/22b39a1112c7b3e09c353fe298a82546eed3ece05331d0a0c40e9592e8cd30409a983ae0c53ea8f53756c5fea6c665c8ae7c065c4f183066578304f4d34169f5
+"@babel/helper-string-parser@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@babel/helper-string-parser@npm:8.0.0"
+  checksum: 10c0/b2272a9eaa63a1bc9ce2673d580e69620fd79786f3e3cf1891f406801f8211810f194f2739fef920f01a97ae06ae465b2dfd238ab8037a3182d0869939ca9a5d
   languageName: node
   linkType: hard
 
-"@babel/helper-validator-identifier@npm:8.0.0-rc.6, @babel/helper-validator-identifier@npm:^8.0.0-rc.6":
-  version: 8.0.0-rc.6
-  resolution: "@babel/helper-validator-identifier@npm:8.0.0-rc.6"
-  checksum: 10c0/85e0f2c746a06467bf952f9ac1cda1dc63702a88bdfa1297d41de42452acbb9dfc5699bf6f4ed928fb3b50bde9635a6e686e1d253fadf47fb27618632e198ce5
+"@babel/helper-validator-identifier@npm:^8.0.0":
+  version: 8.0.2
+  resolution: "@babel/helper-validator-identifier@npm:8.0.2"
+  checksum: 10c0/629eda2a0a99442a1628bbef5f9fd8e26c1aa21ddbf02760d1c482b737932b1bb21fb1f89aacf9c3cf0642b481b810e39f94b8ae9aa44fc4f5516ebec6798b7b
   languageName: node
   linkType: hard
 
-"@babel/parser@npm:8.0.0-rc.6, @babel/parser@npm:^8.0.0-beta.4, @babel/parser@npm:^8.0.0-rc.6":
-  version: 8.0.0-rc.6
-  resolution: "@babel/parser@npm:8.0.0-rc.6"
+"@babel/parser@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@babel/parser@npm:8.0.0"
   dependencies:
-    "@babel/types": "npm:^8.0.0-rc.6"
+    "@babel/types": "npm:^8.0.0"
   bin:
     parser: ./bin/babel-parser.js
-  checksum: 10c0/de4fd82e7733532e6c0a71766f9fc1cae3daefc999be8ae8c8c2155e7af32c3b4fdb14cfc3a010c969113fd6dc698cd0603ec13579bff38e8159e36cbff94449
+  checksum: 10c0/f10665bf3289f4bdc43bc58c482d6baa9fc4e306460d1bc57b059486dc9f23ed4463e746f62d721396466e2a2e0b32d856648b8c30dedbf6b69787b430f21e75
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^8.0.0-rc.6":
-  version: 8.0.0-rc.6
-  resolution: "@babel/types@npm:8.0.0-rc.6"
+"@babel/types@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "@babel/types@npm:8.0.0"
   dependencies:
-    "@babel/helper-string-parser": "npm:^8.0.0-rc.6"
-    "@babel/helper-validator-identifier": "npm:^8.0.0-rc.6"
-  checksum: 10c0/a323db124830cf0bfe5c217411ff9cce2d7d7182d5a02a3ca8c35905dac53878f88d35d1d6abf6132e6c3d353703385083c01a549ea92a364d66523f3ea8904b
+    "@babel/helper-string-parser": "npm:^8.0.0"
+    "@babel/helper-validator-identifier": "npm:^8.0.0"
+  checksum: 10c0/f4130b88818cf9fd0fb653dd35459f58794018416bc0cee0eccefd364c2d146ae90611ae3ae19d91c2f0bbd1e0e440840832baf9a3d5eb5fed077a52f0bcc001
   languageName: node
   linkType: hard
 
@@ -1243,14 +1243,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ast-kit@npm:^3.0.0-beta.1":
-  version: 3.0.0-beta.1
-  resolution: "ast-kit@npm:3.0.0-beta.1"
+"ast-kit@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "ast-kit@npm:3.0.0"
   dependencies:
-    "@babel/parser": "npm:^8.0.0-beta.4"
+    "@babel/parser": "npm:^8.0.0"
     estree-walker: "npm:^3.0.3"
     pathe: "npm:^2.0.3"
-  checksum: 10c0/27a0309d495100e088c6aa6449e2bb79fdf6321c42bb73c196d646935ff788c2202d8dfc19e04499c623f0676cbe5d6baaeb645ede4b349fac2bd5c276419d5a
+  checksum: 10c0/598b286961dbf62a0b61025e4574b0c1a7547f39f94681cb38eb7250ad70bec9d4f82ea05a59d1f12f913aacee48261cb1af950bc62f5dc0ba79b60be28c765a
   languageName: node
   linkType: hard
 
@@ -1273,7 +1273,7 @@ __metadata:
     oxlint: "npm:^1.36.0"
     oxlint-tsgolint: "npm:^0.23.0"
     rolldown: "npm:1.1.2"
-    rolldown-plugin-dts: "npm:^0.25.0"
+    rolldown-plugin-dts: "npm:^0.26.0"
     typescript: "npm:^6.0.0"
     vitest: "npm:^4.0.16"
   languageName: unknown
@@ -1604,10 +1604,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"obug@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "obug@npm:2.1.1"
-  checksum: 10c0/59dccd7de72a047e08f8649e94c1015ec72f94eefb6ddb57fb4812c4b425a813bc7e7cd30c9aca20db3c59abc3c85cc7a62bb656a968741d770f4e8e02bc2e78
+"obug@npm:^2.1.1, obug@npm:^2.1.3":
+  version: 2.1.3
+  resolution: "obug@npm:2.1.3"
+  checksum: 10c0/cb8187fed0a5fc8445507c950e89f3c1bd43895658c398b5803f6b7804dfa0c562975ecce1e67f3d9247d521452a5bfade9e0e951cc0326b7444272f7c24d25f
   languageName: node
   linkType: hard
 
@@ -1846,24 +1846,24 @@ __metadata:
   languageName: node
   linkType: hard
 
-"rolldown-plugin-dts@npm:^0.25.0":
-  version: 0.25.2
-  resolution: "rolldown-plugin-dts@npm:0.25.2"
+"rolldown-plugin-dts@npm:^0.26.0":
+  version: 0.26.0
+  resolution: "rolldown-plugin-dts@npm:0.26.0"
   dependencies:
-    "@babel/generator": "npm:8.0.0-rc.6"
-    "@babel/helper-validator-identifier": "npm:8.0.0-rc.6"
-    "@babel/parser": "npm:8.0.0-rc.6"
-    ast-kit: "npm:^3.0.0-beta.1"
+    "@babel/generator": "npm:^8.0.0"
+    "@babel/helper-validator-identifier": "npm:^8.0.0"
+    "@babel/parser": "npm:^8.0.0"
+    ast-kit: "npm:^3.0.0"
     birpc: "npm:^4.0.0"
     dts-resolver: "npm:^3.0.0"
     get-tsconfig: "npm:5.0.0-beta.5"
-    obug: "npm:^2.1.1"
+    obug: "npm:^2.1.3"
   peerDependencies:
     "@ts-macro/tsc": ^0.3.6
     "@typescript/native-preview": ">=7.0.0-dev.20260325.1"
     rolldown: ^1.0.0
     typescript: ^5.0.0 || ^6.0.0
-    vue-tsc: ~3.2.0
+    vue-tsc: ~3.2.0 || ~3.3.0
   peerDependenciesMeta:
     "@ts-macro/tsc":
       optional: true
@@ -1873,7 +1873,7 @@ __metadata:
       optional: true
     vue-tsc:
       optional: true
-  checksum: 10c0/8bfce712dcbabf8a3554cf1e106644920b500790382c7ec4026f27293db267dd0709d85c6587680b3d1d4591908281bc435f2469c265b258c129d00a579f7bbd
+  checksum: 10c0/fcedb9770b15fe5d9c45a0260bb226e8e3dad92880d03aa7dbaffb8b4929ea8406897063a19140cd62803c87862c010b54a1546ca5de24e375cd69632060407f
   languageName: node
   linkType: hard
 

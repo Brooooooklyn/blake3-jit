@@ -188,122 +188,122 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-android-arm64@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-android-arm64@npm:1.3.6"
+"@napi-rs/blake-hash-android-arm64@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-android-arm64@npm:1.4.0"
   conditions: os=android & cpu=arm64
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-darwin-arm64@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-darwin-arm64@npm:1.3.6"
+"@napi-rs/blake-hash-darwin-arm64@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-darwin-arm64@npm:1.4.0"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-darwin-x64@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-darwin-x64@npm:1.3.6"
+"@napi-rs/blake-hash-darwin-x64@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-darwin-x64@npm:1.4.0"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-freebsd-x64@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-freebsd-x64@npm:1.3.6"
+"@napi-rs/blake-hash-freebsd-x64@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-freebsd-x64@npm:1.4.0"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-arm-gnueabihf@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-arm-gnueabihf@npm:1.3.6"
+"@napi-rs/blake-hash-linux-arm-gnueabihf@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-arm-gnueabihf@npm:1.4.0"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-arm64-gnu@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-arm64-gnu@npm:1.3.6"
+"@napi-rs/blake-hash-linux-arm64-gnu@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-arm64-gnu@npm:1.4.0"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-arm64-musl@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-arm64-musl@npm:1.3.6"
+"@napi-rs/blake-hash-linux-arm64-musl@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-arm64-musl@npm:1.4.0"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-ppc64-gnu@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-ppc64-gnu@npm:1.3.6"
+"@napi-rs/blake-hash-linux-ppc64-gnu@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-ppc64-gnu@npm:1.4.0"
   conditions: os=linux & cpu=ppc64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-s390x-gnu@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-s390x-gnu@npm:1.3.6"
+"@napi-rs/blake-hash-linux-s390x-gnu@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-s390x-gnu@npm:1.4.0"
   conditions: os=linux & cpu=s390x & libc=glibc
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-x64-gnu@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-x64-gnu@npm:1.3.6"
+"@napi-rs/blake-hash-linux-x64-gnu@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-x64-gnu@npm:1.4.0"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-linux-x64-musl@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-linux-x64-musl@npm:1.3.6"
+"@napi-rs/blake-hash-linux-x64-musl@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-linux-x64-musl@npm:1.4.0"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-win32-arm64-msvc@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-win32-arm64-msvc@npm:1.3.6"
+"@napi-rs/blake-hash-win32-arm64-msvc@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-win32-arm64-msvc@npm:1.4.0"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-win32-ia32-msvc@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-win32-ia32-msvc@npm:1.3.6"
+"@napi-rs/blake-hash-win32-ia32-msvc@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-win32-ia32-msvc@npm:1.4.0"
   conditions: os=win32 & cpu=ia32
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash-win32-x64-msvc@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash-win32-x64-msvc@npm:1.3.6"
+"@napi-rs/blake-hash-win32-x64-msvc@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash-win32-x64-msvc@npm:1.4.0"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@napi-rs/blake-hash@npm:1.3.6":
-  version: 1.3.6
-  resolution: "@napi-rs/blake-hash@npm:1.3.6"
+"@napi-rs/blake-hash@npm:1.4.0":
+  version: 1.4.0
+  resolution: "@napi-rs/blake-hash@npm:1.4.0"
   dependencies:
-    "@napi-rs/blake-hash-android-arm64": "npm:1.3.6"
-    "@napi-rs/blake-hash-darwin-arm64": "npm:1.3.6"
-    "@napi-rs/blake-hash-darwin-x64": "npm:1.3.6"
-    "@napi-rs/blake-hash-freebsd-x64": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-arm-gnueabihf": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-arm64-gnu": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-arm64-musl": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-ppc64-gnu": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-s390x-gnu": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-x64-gnu": "npm:1.3.6"
-    "@napi-rs/blake-hash-linux-x64-musl": "npm:1.3.6"
-    "@napi-rs/blake-hash-win32-arm64-msvc": "npm:1.3.6"
-    "@napi-rs/blake-hash-win32-ia32-msvc": "npm:1.3.6"
-    "@napi-rs/blake-hash-win32-x64-msvc": "npm:1.3.6"
+    "@napi-rs/blake-hash-android-arm64": "npm:1.4.0"
+    "@napi-rs/blake-hash-darwin-arm64": "npm:1.4.0"
+    "@napi-rs/blake-hash-darwin-x64": "npm:1.4.0"
+    "@napi-rs/blake-hash-freebsd-x64": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-arm-gnueabihf": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-arm64-gnu": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-arm64-musl": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-ppc64-gnu": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-s390x-gnu": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-x64-gnu": "npm:1.4.0"
+    "@napi-rs/blake-hash-linux-x64-musl": "npm:1.4.0"
+    "@napi-rs/blake-hash-win32-arm64-msvc": "npm:1.4.0"
+    "@napi-rs/blake-hash-win32-ia32-msvc": "npm:1.4.0"
+    "@napi-rs/blake-hash-win32-x64-msvc": "npm:1.4.0"
   dependenciesMeta:
     "@napi-rs/blake-hash-android-arm64":
       optional: true
@@ -333,7 +333,7 @@ __metadata:
       optional: true
     "@napi-rs/blake-hash-win32-x64-msvc":
       optional: true
-  checksum: 10c0/163f462887f3c9319a22beede5b0a031a88ff9272ec0f0d0300bbb3528c91c3039885f206017bfeb502e9c2467e36f0ea223af6829a9084915abb94c8c8367aa
+  checksum: 10c0/98fd8b241463b65d0194bb77972f235987dd3599f775cfd6136d1e0ffc03d22e520b77f67719e74582c276b1e8d0e9aebe01353ce6001a7115d73a0c161fea53
   languageName: node
   linkType: hard
 
@@ -1266,7 +1266,7 @@ __metadata:
   resolution: "blake3-jit@workspace:."
   dependencies:
     "@huggingface/blake3-wasm": "npm:^0.0.4"
-    "@napi-rs/blake-hash": "npm:1.3.6"
+    "@napi-rs/blake-hash": "npm:1.4.0"
     "@oxc-node/cli": "npm:^0.1.0"
     "@types/node": "npm:^25.0.3"
     oxfmt: "npm:^0.54.0"

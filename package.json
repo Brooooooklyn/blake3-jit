@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@huggingface/blake3-wasm": "^0.0.4",
-    "@napi-rs/blake-hash": "1.3.6",
+    "@napi-rs/blake-hash": "1.4.0",
     "@oxc-node/cli": "^0.1.0",
     "@types/node": "^25.0.3",
     "oxfmt": "^0.54.0",

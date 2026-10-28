@@ -40,7 +40,7 @@
     "@napi-rs/blake-hash": "1.4.0",
     "@oxc-node/cli": "^1.0.0",
     "@types/node": "^26.0.0",
-    "oxfmt": "^0.74.0",
+    "oxfmt": "^0.75.0",
     "oxlint": "^1.36.0",
     "oxlint-tsgolint": "^7.0.0",
     "rolldown": "1.2.15",

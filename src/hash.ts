@@ -103,6 +103,7 @@ const reusableOut8 = new Uint32Array(8); // Standard 32-byte output
 // Pre-created view to avoid allocation in hot path (Task 1 optimization)
 const reusableOut8View = new Uint8Array(reusableOut8.buffer, 0, 32);
 const reusableXofOut = new Uint32Array(16);
+const reusableXofBlock = new Uint32Array(16);
 
 // ===== Unrolled CV Copy Helper (Task 7 optimization) =====
 // V8 will inline this - avoids loop overhead in hot paths
@@ -128,6 +129,9 @@ function writeRootXof(
   output: Uint8Array,
 ): void {
   const out = reusableXofOut;
+  const rootBlock = reusableXofBlock;
+  // Output may overlap the caller's input, so snapshot the block before writing.
+  rootBlock.set(block.subarray(blockOffset, blockOffset + 16));
   let outputOffset = 0;
   let outputBlockCounter = 0;
 
@@ -135,8 +139,8 @@ function writeRootXof(
     compress(
       inputCv,
       inputCvOffset,
-      block,
-      blockOffset,
+      rootBlock,
+      0,
       out,
       0,
       true,

@@ -130,6 +130,23 @@ describe("Official BLAKE3 Test Vectors", () => {
       });
     }
 
+    for (const [inputLength, outputLength] of [
+      [64, 131],
+      [128, 192],
+      [1024, 1100],
+    ] as const) {
+      it(`supports overlapping input and output for hashInto(${inputLength}, ${outputLength})`, () => {
+        const input = generateInput(inputLength);
+        const expected = hash(input, outputLength);
+        const buffer = new Uint8Array(outputLength);
+        buffer.set(input, 0);
+
+        hashInto(buffer.subarray(0, inputLength), buffer, outputLength);
+
+        expect(toHex(buffer)).toBe(toHex(expected));
+      });
+    }
+
     it("finalizes repeatedly without consuming multi-chunk state", () => {
       const testCase = testVectors.cases.find(({ input_len }) => input_len === 1025)!;
       const hasher = createHasher().update(generateInput(testCase.input_len));

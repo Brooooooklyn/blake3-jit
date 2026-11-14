@@ -14,7 +14,7 @@ import { fileURLToPath } from "node:url";
 
 import { describe, it, expect } from "vitest";
 
-import { hash, createKeyed, createDeriveKey, createHasher } from "../src/index.js";
+import { hash, hashInto, createKeyed, createDeriveKey, createHasher } from "../src/index.js";
 
 // Load official test vectors
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -106,20 +106,39 @@ describe("Official BLAKE3 Test Vectors", () => {
   describe("Extended Output (XOF mode)", () => {
     // Test that extended outputs match the full test vector hashes (131 bytes)
     for (const testCase of testVectors.cases) {
-      // Only test a few sizes to keep test duration reasonable
-      if (![0, 1, 64, 1024].includes(testCase.input_len)) continue;
+      // Cover empty, single-chunk, multi-chunk, and SIMD inputs.
+      if (![0, 1, 64, 1024, 1025, 2048, 4096, 4097, 8192].includes(testCase.input_len)) {
+        continue;
+      }
 
       it(`extended output for input_len=${testCase.input_len}`, () => {
         const input = generateInput(testCase.input_len);
-        // Use XOF reader to get 131 bytes (the full length of test vector hashes)
-        const hasher = createHasher();
-        hasher.update(input);
-        const xof = hasher.finalizeXof();
-        const digest = xof.read(131);
         const expected = testCase.hash;
-        const actual = toHex(digest);
-        expect(actual).toBe(expected);
+
+        const xof = createHasher().update(input).finalizeXof();
+        expect(toHex(xof.read(131))).toBe(expected);
+
+        expect(toHex(hash(input, 131))).toBe(expected);
+
+        const output = new Uint8Array(160).fill(0xa5);
+        hashInto(input, output, 131);
+        expect(toHex(output.subarray(0, 131))).toBe(expected);
+        expect(output.subarray(131).every((byte) => byte === 0xa5)).toBe(true);
+
+        expect(toHex(createHasher().update(input).finalize(65))).toBe(expected.slice(0, 130));
+        expect(toHex(createHasher().update(input).finalize(131))).toBe(expected);
       });
     }
+
+    it("finalizes repeatedly without consuming multi-chunk state", () => {
+      const testCase = testVectors.cases.find(({ input_len }) => input_len === 1025)!;
+      const hasher = createHasher().update(generateInput(testCase.input_len));
+
+      expect(toHex(hasher.finalize())).toBe(testCase.hash.slice(0, 64));
+      expect(toHex(hasher.finalize())).toBe(testCase.hash.slice(0, 64));
+      expect(toHex(hasher.finalize(65))).toBe(testCase.hash.slice(0, 130));
+      expect(toHex(hasher.finalizeXof().read(131))).toBe(testCase.hash);
+      expect(toHex(hasher.finalize())).toBe(testCase.hash.slice(0, 64));
+    });
   });
 });

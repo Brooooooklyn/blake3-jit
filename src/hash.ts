@@ -102,6 +102,7 @@ const reusableFlags = new Uint32Array(4);
 const reusableOut8 = new Uint32Array(8); // Standard 32-byte output
 // Pre-created view to avoid allocation in hot path (Task 1 optimization)
 const reusableOut8View = new Uint8Array(reusableOut8.buffer, 0, 32);
+const reusableXofOut = new Uint32Array(16);
 
 // ===== Unrolled CV Copy Helper (Task 7 optimization) =====
 // V8 will inline this - avoids loop overhead in hot paths
@@ -114,6 +115,44 @@ function copyCV8(src: Uint32Array, srcOff: number, dst: Uint32Array, dstOff: num
   dst[dstOff + 5] = src[srcOff + 5];
   dst[dstOff + 6] = src[srcOff + 6];
   dst[dstOff + 7] = src[srcOff + 7];
+}
+
+/** Write extended output by repeating the root compression with an incrementing counter. */
+function writeRootXof(
+  inputCv: Uint32Array,
+  inputCvOffset: number,
+  block: Uint32Array,
+  blockOffset: number,
+  blockLen: number,
+  flags: number,
+  output: Uint8Array,
+): void {
+  const out = reusableXofOut;
+  let outputOffset = 0;
+  let outputBlockCounter = 0;
+
+  while (outputOffset < output.length) {
+    compress(
+      inputCv,
+      inputCvOffset,
+      block,
+      blockOffset,
+      out,
+      0,
+      true,
+      outputBlockCounter++,
+      blockLen,
+      flags | ROOT,
+    );
+
+    const byteCount = Math.min(BLOCK_LEN, output.length - outputOffset);
+    if (IS_LITTLE_ENDIAN) {
+      output.set(new Uint8Array(out.buffer, 0, byteCount), outputOffset);
+    } else {
+      writeLittleEndianBytesPartial(out, 0, output, outputOffset, byteCount);
+    }
+    outputOffset += byteCount;
+  }
 }
 
 /**
@@ -562,6 +601,11 @@ function hashPureJS(input: Uint8Array, outputLen: number): Uint8Array {
   if (inputLen === 0) {
     const block = getBlockWords();
     block.fill(0);
+    if (outputLen > 64) {
+      const result = new Uint8Array(outputLen);
+      writeRootXof(IV, 0, block, 0, 0, CHUNK_START | CHUNK_END, result);
+      return result;
+    }
     // Use reusable output buffer for common 32-byte case
     const out = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
 
@@ -587,7 +631,11 @@ function hashPureJS(input: Uint8Array, outputLen: number): Uint8Array {
   if (numChunks === 1) {
     // Use reusable output buffer for common 32-byte case
     const cv = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
-    hashChunkRoot(input, 0, inputLen, 0, 0, cv, outputLen > 32);
+    const xofOutput = outputLen > 64 ? new Uint8Array(outputLen) : undefined;
+    hashChunkRoot(input, 0, inputLen, 0, 0, cv, outputLen > 32, xofOutput);
+    if (xofOutput) {
+      return xofOutput;
+    }
 
     // Return result - use pre-created view for common 32-byte case
     if (outputLen === 32 && IS_LITTLE_ENDIAN) {
@@ -775,6 +823,11 @@ function hashPureJS(input: Uint8Array, outputLen: number): Uint8Array {
     copyCV8(stack, rightOff, parentBlock, 8);
 
     if (stackLen === 0) {
+      if (outputLen > 64) {
+        const result = new Uint8Array(outputLen);
+        writeRootXof(IV, 0, parentBlock, 0, BLOCK_LEN, PARENT, result);
+        return result;
+      }
       // This is the root - use reusable output buffer for common 32-byte case
       const out = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
       compress(IV, 0, parentBlock, 0, out, 0, outputLen > 32, 0, BLOCK_LEN, PARENT | ROOT);
@@ -800,12 +853,18 @@ function hashPureJS(input: Uint8Array, outputLen: number): Uint8Array {
   }
 
   // Single entry in stack - this is the root
-  const out = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
   const lastBlock = getBlockWords();
   lastBlock.fill(0);
   // Copy first 8 words from stack (unrolled)
   copyCV8(stack, 0, lastBlock, 0);
 
+  if (outputLen > 64) {
+    const result = new Uint8Array(outputLen);
+    writeRootXof(IV, 0, lastBlock, 0, BLOCK_LEN, 0, result);
+    return result;
+  }
+
+  const out = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
   compress(IV, 0, lastBlock, 0, out, 0, outputLen > 32, 0, BLOCK_LEN, ROOT);
 
   // Return result - use pre-created view for common 32-byte case
@@ -832,6 +891,7 @@ function hashChunkRoot(
   flags: number,
   out: Uint32Array,
   fullOutput: boolean,
+  xofOutput?: Uint8Array,
 ): void {
   // Use reusable tempCv (single-threaded safe)
   reusableTempCv.set(IV);
@@ -867,11 +927,43 @@ function hashChunkRoot(
       block.fill(0);
     } else if (inputWords && (blockStart >>> 2) + 16 <= inputWords.length) {
       // Fast path
+      if (isLast && xofOutput) {
+        writeRootXof(
+          reusableTempCv,
+          0,
+          inputWords,
+          blockStart >>> 2,
+          blockLen,
+          blockFlags,
+          xofOutput,
+        );
+      } else {
+        compress(
+          reusableTempCv,
+          0,
+          inputWords,
+          blockStart >>> 2,
+          isLast ? out : reusableTempCv,
+          0,
+          isLast && fullOutput,
+          chunkCounter,
+          blockLen,
+          blockFlags,
+        );
+      }
+      continue;
+    } else {
+      readLittleEndianWordsFull(input, inputOffset + blockStart, block);
+    }
+
+    if (isLast && xofOutput) {
+      writeRootXof(reusableTempCv, 0, block, 0, blockLen, blockFlags, xofOutput);
+    } else {
       compress(
         reusableTempCv,
         0,
-        inputWords,
-        blockStart >>> 2,
+        block,
+        0,
         isLast ? out : reusableTempCv,
         0,
         isLast && fullOutput,
@@ -879,23 +971,7 @@ function hashChunkRoot(
         blockLen,
         blockFlags,
       );
-      continue;
-    } else {
-      readLittleEndianWordsFull(input, inputOffset + blockStart, block);
     }
-
-    compress(
-      reusableTempCv,
-      0,
-      block,
-      0,
-      isLast ? out : reusableTempCv,
-      0,
-      isLast && fullOutput,
-      chunkCounter,
-      blockLen,
-      blockFlags,
-    );
   }
 }
 
@@ -1156,6 +1232,11 @@ function hashSimd(input: Uint8Array, outputLen: number): Uint8Array {
     copyCV8(stack, rightOff, parentBlock, 8);
 
     if (stackLen === 0) {
+      if (outputLen > 64) {
+        const result = new Uint8Array(outputLen);
+        writeRootXof(IV, 0, parentBlock, 0, BLOCK_LEN, PARENT, result);
+        return result;
+      }
       // This is the root - use reusable output buffer
       const out = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
       compress(IV, 0, parentBlock, 0, out, 0, outputLen > 32, 0, BLOCK_LEN, PARENT | ROOT);
@@ -1191,6 +1272,12 @@ function hashSimd(input: Uint8Array, outputLen: number): Uint8Array {
     block.fill(0);
     // Copy first 8 words from stack (unrolled)
     copyCV8(stack, 0, block, 0);
+
+    if (outputLen > 64) {
+      const result = new Uint8Array(outputLen);
+      writeRootXof(IV, 0, block, 0, BLOCK_LEN, 0, result);
+      return result;
+    }
 
     // Use reusable output buffer
     const out = outputLen === 32 ? reusableOut8 : new Uint32Array(outputLen > 32 ? 16 : 8);
@@ -1273,6 +1360,10 @@ function hashPureJSInto(input: Uint8Array, output: Uint8Array, outputLen: number
   if (inputLen === 0) {
     const block = getBlockWords();
     block.fill(0);
+    if (outputLen > 64) {
+      writeRootXof(IV, 0, block, 0, 0, CHUNK_START | CHUNK_END, output.subarray(0, outputLen));
+      return;
+    }
     const out = outputLen <= 32 ? reusableOut8 : new Uint32Array(16);
 
     compress(IV, 0, block, 0, out, 0, outputLen > 32, 0, 0, CHUNK_START | CHUNK_END | ROOT);
@@ -1292,7 +1383,11 @@ function hashPureJSInto(input: Uint8Array, output: Uint8Array, outputLen: number
   // Single chunk optimization
   if (numChunks === 1) {
     const cv = outputLen <= 32 ? reusableOut8 : new Uint32Array(16);
-    hashChunkRoot(input, 0, inputLen, 0, 0, cv, outputLen > 32);
+    const xofOutput = outputLen > 64 ? output.subarray(0, outputLen) : undefined;
+    hashChunkRoot(input, 0, inputLen, 0, 0, cv, outputLen > 32, xofOutput);
+    if (xofOutput) {
+      return;
+    }
 
     // Copy result to output
     if (IS_LITTLE_ENDIAN) {

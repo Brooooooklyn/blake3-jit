@@ -480,8 +480,9 @@ export class Hasher {
     let parentBlock = this.parentBlock;
     let cv = this.finalizeCv;
 
-    // If there are chunks on the stack, merge them
-    if (this.cvStackLen > 0) {
+    // Merge a local view of the stack so finalization can be repeated.
+    let cvStackLen = this.cvStackLen;
+    if (cvStackLen > 0) {
       // First compress the current chunk
       compress(
         output.inputCv,
@@ -497,12 +498,12 @@ export class Hasher {
       );
 
       // Merge with parent nodes from stack
-      while (this.cvStackLen > 0) {
-        this.cvStackLen--;
-        parentBlock.set(this.cvStack.subarray(this.cvStackLen * 8, (this.cvStackLen + 1) * 8), 0);
+      while (cvStackLen > 0) {
+        cvStackLen--;
+        parentBlock.set(this.cvStack.subarray(cvStackLen * 8, (cvStackLen + 1) * 8), 0);
         parentBlock.set(cv, 8);
 
-        if (this.cvStackLen > 0) {
+        if (cvStackLen > 0) {
           compress(
             this.keyWords,
             0,
@@ -539,36 +540,31 @@ export class Hasher {
    * @returns The hash output
    */
   finalize(outputLength: number = OUT_LEN): Uint8Array {
+    if (outputLength > 64) {
+      return this.finalizeXof().read(outputLength);
+    }
+
     const output = this.finalizeOutput();
     const result = new Uint8Array(outputLength);
+    const outWords = this.outWords;
+    compress(
+      output.inputCv,
+      0,
+      output.blockWords,
+      0,
+      outWords,
+      0,
+      outputLength > 32, // full output if > 32 bytes
+      output.counter,
+      output.blockLen,
+      output.flags | ROOT,
+    );
 
-    if (outputLength <= 64) {
-      // Single block output
-      const outWords = this.outWords;
-      compress(
-        output.inputCv,
-        0,
-        output.blockWords,
-        0,
-        outWords,
-        0,
-        outputLength > 32, // full output if > 32 bytes
-        output.counter,
-        output.blockLen,
-        output.flags | ROOT,
-      );
-
-      if (IS_LITTLE_ENDIAN) {
-        const outBytes = new Uint8Array(outWords.buffer);
-        result.set(outBytes.subarray(0, outputLength));
-      } else {
-        writeLittleEndianBytesPartial(outWords, 0, result, 0, outputLength);
-      }
+    if (IS_LITTLE_ENDIAN) {
+      const outBytes = new Uint8Array(outWords.buffer);
+      result.set(outBytes.subarray(0, outputLength));
     } else {
-      // Multiple blocks - use XOF
-      const xof = this.finalizeXof();
-      const full = xof.read(outputLength);
-      result.set(full);
+      writeLittleEndianBytesPartial(outWords, 0, result, 0, outputLength);
     }
 
     return result;
